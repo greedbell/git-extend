@@ -22,10 +22,10 @@ for branch in ${branches}
 do
   if [[ -z $target ]] || [[ $branch == $target ]];then
     find_branch=1
-    echo Are your sure to delete the branch \"${branch}\" ? [y/N]
+    echo Are your sure to delete the branch \"${branch}\" ? [N/y]
     read sure
     if [[ $sure == y ]] || [[ $sure == Y ]];then
-      echo "The branch \"$branch\" has been deleted!"
+      git branch -D $branch
     fi
   fi
 done
