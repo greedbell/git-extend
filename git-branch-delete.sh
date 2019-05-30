@@ -4,7 +4,7 @@
 # git delete branch
 #
 
-if [[ $# > 1 ]]; then
+if [[ $# != 1 ]]; then
   echo
   echo "Usage: ${0##*/} [BRANCH]"
   echo
@@ -16,9 +16,12 @@ fi
 target=$1
 
 branches=$(git branch --format='%(refname:short)') || exit 1
+
+find_branch=0
 for branch in ${branches}
 do
   if [[ -z $target ]] || [[ $branch == $target ]];then
+    find_branch=1
     echo Are your sure to delete the branch \"${branch}\" ? [y/N]
     read sure
     if [[ $sure == y ]] || [[ $sure == Y ]];then
@@ -26,4 +29,10 @@ do
     fi
   fi
 done
+
+if [[ ${find_branch} -eq 0 ]];then
+  echo "No branch \"$target\""
+  exit 0
+fi
+
 exit 0
